@@ -12,6 +12,9 @@ export const getAllReviews: RequestHandler = async (req,res,next) => {
 };
 
 export const createReview: RequestHandler = async (req, res, next) => {
+
+    //this below user check is to make sure the user is logged in - the user's userId
+    //will need to be stored in local storage & accessed on the front end
     let user: User | null = await verifyUser(req);
 
     if (!user) {
@@ -40,6 +43,10 @@ export const getReview: RequestHandler = async (req, res, next) => {
 };
 
 export const updateReview: RequestHandler = async (req, res, next) => {
+    
+    //this below user check is to make sure the user is logged in - the user's userId
+    //will need to be stored in local storage & accessed on the front end
+    
     let user:User | null = await verifyUser(req);
 
     if (!user) {
@@ -61,6 +68,10 @@ export const updateReview: RequestHandler = async (req, res, next) => {
 };
 
 export const deleteReview: RequestHandler = async (req, res, next) => {
+
+    //this below user check is to make sure the user is logged in - the user's userId
+    //will need to be stored in local storage & accessed on the front end
+
     let user:User | null = await verifyUser(req);
 
     if (!user) {
@@ -79,6 +90,20 @@ export const deleteReview: RequestHandler = async (req, res, next) => {
 };
 
 
+//getAllUserReviews returns all the reviews that match the logged in user's userId
+//it has a check to make sure the user is logged in & the user's userId will need
+//to be accessed in the frontend - perhaps by storing & accessing in local storage
+
+export const getAllUserReviews: RequestHandler = async (req,res,next) => {
+    let user:User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send('user not logged in')
+    }
+
+    let foundReviews = await Review.findAll({ where: { userId: user.userId}});
+    res.status(200).json(foundReviews);
+};
 
 
 
