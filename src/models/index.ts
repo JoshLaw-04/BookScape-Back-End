@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { AssociateUserReview, ReviewFactory } from './review';
 import { UserFactory } from './user';
 
 const dbName = 'bookscapeDB';
@@ -12,5 +13,8 @@ const sequelize = new Sequelize(dbName, username, password, {
 });
 
 UserFactory(sequelize);
+ReviewFactory(sequelize);
+AssociateUserReview();
+
 
 export const db = sequelize;
