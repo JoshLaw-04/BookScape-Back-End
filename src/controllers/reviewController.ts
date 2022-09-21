@@ -58,7 +58,27 @@ export const updateReview: RequestHandler = async (req, res, next) => {
         } else {
             res.status(400).json("the userId doesn't match, review can't be found, or the comment is missing");
         }
-}
+};
+
+export const deleteReview: RequestHandler = async (req, res, next) => {
+    let user:User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let reviewId = req.params.reviewId;
+    let foundReview = await Review.findByPk(reviewId);
+
+    if (foundReview && foundReview.userId == user.userId) {
+        await Review.destroy({where: {reviewId : reviewId}});
+        res.status(200).json('success!');
+    } else {
+        res.status(404).json("review's userId & user's userId don't match or doesn't exist")
+    };
+};
+
+
 
 
 
