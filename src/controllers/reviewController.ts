@@ -39,5 +39,26 @@ export const getReview: RequestHandler = async (req, res, next) => {
     }
 };
 
+export const updateReview: RequestHandler = async (req, res, next) => {
+    let user:User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let reviewId = req.params.reviewId;
+    let newReview: Review = req.body;
+    let foundReview = await Review.findByPk(reviewId);
+
+    if (foundReview && foundReview.userId == user.userId
+        && foundReview.reviewId == newReview.reviewId
+        && newReview.comment) {
+            await Review.update(newReview, {where: {reviewId: reviewId}});
+            res.status(200).json('success!');
+        } else {
+            res.status(400).json("the userId doesn't match, review can't be found, or the comment is missing");
+        }
+}
+
 
 
