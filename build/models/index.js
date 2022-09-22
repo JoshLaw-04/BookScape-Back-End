@@ -4,9 +4,9 @@ exports.db = void 0;
 const sequelize_1 = require("sequelize");
 const review_1 = require("./review");
 const user_1 = require("./user");
-const dbName = 'bookscapedb';
+const dbName = 'bookscapeDB';
 const username = 'root';
-const password = 'password1';
+const password = 'Password1!';
 const sequelize = new sequelize_1.Sequelize(dbName, username, password, {
     host: 'localhost',
     port: 3306,

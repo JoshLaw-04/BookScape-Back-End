@@ -16,5 +16,4 @@ UserFactory(sequelize);
 ReviewFactory(sequelize);
 AssociateUserReview();
 
-
 export const db = sequelize;
