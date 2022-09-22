@@ -3,6 +3,7 @@ import express, { NextFunction, Request,
 import morgan from 'morgan';
 import { db } from './models';
 import userRoutes from './routes/userRoutes';
+import reviewRoutes from './routes/reviewRoutes';
 
 const app = express();
 
@@ -22,15 +23,13 @@ app.use(cors(corsOptions));
 
 // routes
 app.use('/api/users', userRoutes);
+app.use('/api/reviews', reviewRoutes)
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).end();
 })
 
-//  Katie please look at this section is this correct?
-// Looks good to me - the true test will be if it works :D -KT
-
-db.sync({ alter: true }).then(() => {
+db.sync().then(() => {
     console.info('you are soo connected right now!')
 });
 
