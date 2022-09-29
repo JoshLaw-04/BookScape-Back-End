@@ -3,15 +3,13 @@ import { Book } from "../models/book";
 import { Review } from "../models/review";
 
 export const getAllBooks: RequestHandler = async (req, res, next) => {
-    let book = await Book.findAll( {include: [{
-                                                model: Review, 
-                                                required: true}]});
+    let book = await Book.findAll();
     res.status(200).json(book);
 };
 
 export const getBook: RequestHandler = async (req, res, next) => {
     let bookId = req.params.bookId;
-    let foundBook = await Review.findByPk(bookId);
+    let foundBook = await Book.findByPk(bookId);
     if (foundBook) {
         res.status(200).json(foundBook);
     } else {
@@ -30,7 +28,6 @@ export const setBook: RequestHandler = async (req, res, next ) => {
         await Book.update(newBook, {where: {volumeId: volumeId}})
         res.status(200).json('updated');
     } else if (!bookFound) {
-        console.log(newBook)
         let createdBook = await Book.create(newBook);
         res.status(201).json(createdBook);
     } else {

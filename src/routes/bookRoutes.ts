@@ -7,7 +7,7 @@ const router = Router();
 router.get('/', getAllBooks);
 
 // GET localhost:3000/api/books
-router.get('/:volumeId', getBook);
+router.get('/:bookId', getBook);
 
 //POST localhost:3000/api/books
 router.post('/', setBook);

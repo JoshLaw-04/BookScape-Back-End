@@ -19,9 +19,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 // routes
-app.use('/api/users', userRoutes_1.default);
-app.use('/api/reviews', reviewRoutes_1.default);
 app.use('/api/books', bookRoutes_1.default);
+app.use('/api/reviews', reviewRoutes_1.default);
+app.use('/api/users', userRoutes_1.default);
 app.use((req, res, next) => {
     res.status(404).end();
 });
