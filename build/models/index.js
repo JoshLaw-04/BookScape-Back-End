@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.db = void 0;
 const sequelize_1 = require("sequelize");
+const book_1 = require("./book");
 const review_1 = require("./review");
 const user_1 = require("./user");
 const dbName = 'bookscapeDB';
@@ -14,5 +15,7 @@ const sequelize = new sequelize_1.Sequelize(dbName, username, password, {
 });
 (0, user_1.UserFactory)(sequelize);
 (0, review_1.ReviewFactory)(sequelize);
+(0, book_1.BookFactory)(sequelize);
 (0, review_1.AssociateUserReview)();
+(0, book_1.AssociateReviewedBook)();
 exports.db = sequelize;

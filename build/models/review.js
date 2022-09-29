@@ -19,8 +19,8 @@ function ReviewFactory(sequelize) {
             allowNull: false
         },
         bookId: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
+            type: sequelize_1.DataTypes.INTEGER,
+            allowNull: true
         },
         starRating: {
             type: sequelize_1.DataTypes.ENUM('value1', 'value2', 'value3', 'value4', 'value5'),

@@ -2,31 +2,37 @@ import { RequestHandler } from "express";
 import { Book } from "../models/book";
 import { Review } from "../models/review";
 
-/* Please review and let me know before I test this.  I am not 
-sure about any of this, but it is a start */
-
-export const getBook: RequestHandler = async (req, res, next) => {
+export const getAllBooks: RequestHandler = async (req, res, next) => {
     let book = await Book.findAll( {include: [{
                                                 model: Review, 
                                                 required: true}]});
     res.status(200).json(book);
 };
 
-export const setBook: RequestHandler = async (req, res, next ) => {
-    let volumeId = req.params.volumeId;
-    let newBook: Book = req.body;
+export const getBook: RequestHandler = async (req, res, next) => {
+    let bookId = req.params.bookId;
+    let foundBook = await Review.findByPk(bookId);
+    if (foundBook) {
+        res.status(200).json(foundBook);
+    } else {
+        res.status(404).json({});
+    }
+};
 
-    let bookFound = await Book.findByPk(volumeId);
-    /* trying to test if the book by volumeId exists before 
-    creating new */
+export const setBook: RequestHandler = async (req, res, next ) => {
+
+    let newBook: Book = req.body;
+    let volumeId = req.body.volumeId
+
+    let bookFound = await Book.findOne({ where: { volumeId : volumeId} });
+
     if (bookFound && bookFound.volumeId == newBook.volumeId) {
-        await Book.update(newBook, {
-            where: { volumeId: volumeId }
-        });
-        res.status(200).json();
-    } else if (bookFound && bookFound.volumeId != newBook.volumeId) {
-        let created = await Book.create(newBook);
-        res.status(201).json(created);
+        await Book.update(newBook, {where: {volumeId: volumeId}})
+        res.status(200).json('updated');
+    } else if (!bookFound) {
+        console.log(newBook)
+        let createdBook = await Book.create(newBook);
+        res.status(201).json(createdBook);
     } else {
         res.status(400).json();
     }

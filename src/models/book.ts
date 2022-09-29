@@ -3,6 +3,7 @@ import { DataTypes, InferAttributes, InferCreationAttributes,
 import { Review } from "./review";
 
 export class Book extends Model<InferAttributes<Book>, InferCreationAttributes<Book>>{
+    declare bookId: number;
     declare volumeId: string;
     declare title: string;
     declare author: string;
@@ -14,9 +15,15 @@ export class Book extends Model<InferAttributes<Book>, InferCreationAttributes<B
 
 export function BookFactory(sequelize: Sequelize) {
     Book.init({
+        bookId: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true,
+            allowNull: false
+        },
         volumeId: {
             type: DataTypes.STRING,
-            primaryKey: true,
             unique: true,
             allowNull: false
         },
@@ -34,7 +41,7 @@ export function BookFactory(sequelize: Sequelize) {
         },
         img: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         publishingCo: {
             type: DataTypes.STRING,
@@ -51,7 +58,6 @@ export function BookFactory(sequelize: Sequelize) {
     });
 };
 
-export function AssociateUserReview() {
-    Review.hasOne(Book, { foreignKey: 'volumeId' });
-    Book.belongsTo(Review, { foreignKey: 'volumeId' });
+export function AssociateReviewedBook() {
+    Review.belongsTo(Book, { foreignKey: 'bookId' });
 }
