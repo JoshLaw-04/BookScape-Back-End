@@ -1,10 +1,11 @@
-import { DataType, DataTypes, EnumDataType, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize } from "sequelize";
+import { Book } from "./book";
 import { User } from "./user";
 
 export class Review extends Model<InferAttributes<Review>, InferCreationAttributes<Review>>{
     declare reviewId: number;
     declare userId: number;
-    declare bookId: string;
+    declare bookId: number;
     declare starRating: string | null;
     declare comment: string;
     declare updatedAt?: Date;
@@ -23,8 +24,8 @@ export function ReviewFactory(sequelize: Sequelize) {
             allowNull: false
         },
         bookId: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.INTEGER,
+            allowNull: true
         },
         starRating: {
             type: DataTypes.ENUM('value1', 'value2', 'value3', 'value4', 'value5'),

@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { AssociateReviewedBook, BookFactory } from './book';
 import { AssociateUserReview, ReviewFactory } from './review';
 import { UserFactory } from './user';
 
@@ -14,6 +15,8 @@ const sequelize = new Sequelize(dbName, username, password, {
 
 UserFactory(sequelize);
 ReviewFactory(sequelize);
+BookFactory(sequelize);
 AssociateUserReview();
+AssociateReviewedBook();
 
 export const db = sequelize;
