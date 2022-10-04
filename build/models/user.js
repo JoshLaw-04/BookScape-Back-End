@@ -23,15 +23,15 @@ function UserFactory(sequelize) {
             allowNull: false,
             unique: true
         },
-        email: {
-            type: sequelize_1.DataTypes.STRING,
-            allowNull: false
-        },
         firstName: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
         },
         lastName: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
         }

@@ -5,9 +5,9 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare userId: number;
     declare username: string;
     declare password: string;
-    declare email: string;
     declare firstName: string;
     declare lastName: string;
+    declare email: string;
 }
 
 export function UserFactory(sequelize: Sequelize) {
@@ -28,15 +28,15 @@ export function UserFactory(sequelize: Sequelize) {
             allowNull: false,
             unique: true
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         firstName: {
             type: DataTypes.STRING,
             allowNull: false
         },
         lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
             type: DataTypes.STRING,
             allowNull: false
         }

@@ -39,11 +39,7 @@ export function ReviewFactory(sequelize: Sequelize) {
         updatedAt: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
-            get: function() {
-                return this.getDataValue('updatedAt')
-                ?.toLocaleString('en-US', { timeZone: 'UTC'});
-            }
+            defaultValue: DataTypes.NOW
         }
     }, {
         freezeTableName: true,

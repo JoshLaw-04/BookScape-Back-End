@@ -29,11 +29,11 @@ function BookFactory(sequelize) {
             allowNull: false
         },
         description: {
-            type: sequelize_1.DataTypes.STRING,
+            type: sequelize_1.DataTypes.TEXT('medium'),
             allowNull: false
         },
         img: {
-            type: sequelize_1.DataTypes.STRING,
+            type: sequelize_1.DataTypes.TEXT('medium'),
             allowNull: true
         },
         publishingCo: {

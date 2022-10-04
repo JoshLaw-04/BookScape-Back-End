@@ -14,8 +14,6 @@ const getAllReviews = async (req, res, next) => {
 };
 exports.getAllReviews = getAllReviews;
 const createReview = async (req, res, next) => {
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
@@ -43,8 +41,6 @@ const getReview = async (req, res, next) => {
 };
 exports.getReview = getReview;
 const updateReview = async (req, res, next) => {
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();
@@ -64,8 +60,6 @@ const updateReview = async (req, res, next) => {
 };
 exports.updateReview = updateReview;
 const deleteReview = async (req, res, next) => {
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
         return res.status(403).send();

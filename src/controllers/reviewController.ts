@@ -13,8 +13,6 @@ export const getAllReviews: RequestHandler = async (req,res,next) => {
 
 export const createReview: RequestHandler = async (req, res, next) => {
 
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
     let user: User | null = await verifyUser(req);
 
     if (!user) {
@@ -44,9 +42,6 @@ export const getReview: RequestHandler = async (req, res, next) => {
 
 export const updateReview: RequestHandler = async (req, res, next) => {
     
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
-    
     let user:User | null = await verifyUser(req);
 
     if (!user) {
@@ -68,9 +63,6 @@ export const updateReview: RequestHandler = async (req, res, next) => {
 };
 
 export const deleteReview: RequestHandler = async (req, res, next) => {
-
-    //this below user check is to make sure the user is logged in - the user's userId
-    //will need to be stored in local storage & accessed on the front end
 
     let user:User | null = await verifyUser(req);
 

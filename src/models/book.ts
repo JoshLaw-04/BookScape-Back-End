@@ -36,11 +36,11 @@ export function BookFactory(sequelize: Sequelize) {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT('medium'),
             allowNull: false
         },
         img: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT('medium'),
             allowNull: true
         },
         publishingCo: {
