@@ -39,17 +39,17 @@ export const loginUser: RequestHandler = async (req, res, next) => {
 
 export const getUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
-    let reqId = parseInt(req.params.id);
-    
-    if (user && user.userId == reqId) {
-        let { username, email, firstName, lastName } = user;
-        res.status(200).json({
-            username,
-            email,
-            firstName,
-            lastName
-        });  
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.userId;
+    let userFound = await User.findByPk(userId);
+
+    if (userFound) {
+        res.status(200).json(userFound)
     } else {
-        res.status(401).send('Invalid');
+        res.status(404).json({});
     }
 }
