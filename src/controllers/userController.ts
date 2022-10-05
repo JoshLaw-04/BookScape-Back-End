@@ -1,7 +1,8 @@
 import { RequestHandler } from "express";
 import { User } from "../models/user";
 import { hashPassword, comparePasswords, 
-    signUserToken } from "../services/auth";
+    signUserToken, 
+    verifyUser} from "../services/auth";
 
 export const createUser: RequestHandler = async (req, res, next) => {
     let newUser: User = req.body;
@@ -33,5 +34,22 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         }
     } else {
         res.status(401).json('Invalid password or username');
+    }
+}
+
+export const getUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+
+    if (!user) {
+        return res.status(403).send();
+    }
+
+    let userId = req.params.userId;
+    let userFound = await User.findByPk(userId);
+
+    if (userFound) {
+        res.status(200).json(userFound)
+    } else {
+        res.status(404).json({});
     }
 }
