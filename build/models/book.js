@@ -15,32 +15,27 @@ function BookFactory(sequelize) {
             unique: true,
             allowNull: false
         },
-        volumeId: {
-            type: sequelize_1.DataTypes.STRING,
-            unique: true,
-            allowNull: false
-        },
         title: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
         },
-        author: {
-            type: sequelize_1.DataTypes.STRING,
+        authors: {
+            type: sequelize_1.DataTypes.JSON,
             allowNull: false
         },
         description: {
             type: sequelize_1.DataTypes.TEXT('medium'),
             allowNull: false
         },
-        img: {
-            type: sequelize_1.DataTypes.TEXT('medium'),
-            allowNull: true
+        imageLinks: {
+            type: sequelize_1.DataTypes.JSON,
+            allowNull: false
         },
-        publishingCo: {
+        publisher: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
         },
-        publishingDate: {
+        publishedDate: {
             type: sequelize_1.DataTypes.STRING,
             allowNull: false
         }

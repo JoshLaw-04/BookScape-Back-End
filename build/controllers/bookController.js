@@ -19,11 +19,11 @@ const getBook = async (req, res, next) => {
 };
 exports.getBook = getBook;
 const setBook = async (req, res, next) => {
-    let newBook = req.body;
-    let volumeId = req.body.volumeId;
-    let bookFound = await book_1.Book.findOne({ where: { volumeId: volumeId } });
-    if (bookFound && bookFound.volumeId == newBook.volumeId) {
-        await book_1.Book.update(newBook, { where: { volumeId: volumeId } });
+    let newBook = req.body.volumeInfo;
+    let title = req.body.volumeInfo.title;
+    let bookFound = await book_1.Book.findOne({ where: { title: title } });
+    if (bookFound && bookFound.title == newBook.title) {
+        await book_1.Book.update(newBook, { where: { title: title } });
         res.status(200).json('updated');
     }
     else if (!bookFound) {

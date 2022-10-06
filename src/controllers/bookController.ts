@@ -19,13 +19,13 @@ export const getBook: RequestHandler = async (req, res, next) => {
 
 export const setBook: RequestHandler = async (req, res, next ) => {
 
-    let newBook: Book = req.body;
-    let volumeId = req.body.volumeId
+    let newBook: Book = req.body.volumeInfo;
+    let title = req.body.volumeInfo.title
 
-    let bookFound = await Book.findOne({ where: { volumeId : volumeId} });
+    let bookFound = await Book.findOne({ where: { title : title } });
 
-    if (bookFound && bookFound.volumeId == newBook.volumeId) {
-        await Book.update(newBook, {where: {volumeId: volumeId}})
+    if (bookFound && bookFound.title == newBook.title) {
+        await Book.update(newBook, {where: {title: title}})
         res.status(200).json('updated');
     } else if (!bookFound) {
         let createdBook = await Book.create(newBook);
