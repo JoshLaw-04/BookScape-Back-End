@@ -4,13 +4,12 @@ import { Review } from "./review";
 
 export class Book extends Model<InferAttributes<Book>, InferCreationAttributes<Book>>{
     declare bookId: number;
-    declare volumeId: string;
     declare title: string;
-    declare author: string;
+    declare authors: string;
     declare description: string;
-    declare img: string;
-    declare publishingCo: string;
-    declare publishingDate: string;
+    declare imageLinks: string;
+    declare publisher: string;
+    declare publishedDate: string;
 }
 
 export function BookFactory(sequelize: Sequelize) {
@@ -22,32 +21,27 @@ export function BookFactory(sequelize: Sequelize) {
             unique: true,
             allowNull: false
         },
-        volumeId: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
-        },
         title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        author: {
-            type: DataTypes.STRING,
+        authors: {
+            type: DataTypes.JSON,
             allowNull: false
         },
         description: {
             type: DataTypes.TEXT('medium'),
             allowNull: false
         },
-        img: {
-            type: DataTypes.TEXT('medium'),
-            allowNull: true
+        imageLinks: {
+            type: DataTypes.JSON,
+            allowNull: false
         },
-        publishingCo: {
+        publisher: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        publishingDate: {
+        publishedDate: {
             type: DataTypes.STRING,
             allowNull: false
         }
