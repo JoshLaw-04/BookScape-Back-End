@@ -40,18 +40,16 @@ const loginUser = async (req, res, next) => {
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
-    let reqId = parseInt(req.params.id);
-    if (user && user.userId == reqId) {
-        let { username, email, firstName, lastName } = user;
-        res.status(200).json({
-            username,
-            email,
-            firstName,
-            lastName
-        });
+    if (!user) {
+        return res.status(403).send();
+    }
+    let userId = req.params.userId;
+    let userFound = await user_1.User.findByPk(userId);
+    if (userFound) {
+        res.status(200).json(userFound);
     }
     else {
-        res.status(401).send('Invalid');
+        res.status(404).json({});
     }
 };
 exports.getUser = getUser;
