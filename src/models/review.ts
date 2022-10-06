@@ -6,7 +6,7 @@ export class Review extends Model<InferAttributes<Review>, InferCreationAttribut
     declare reviewId: number;
     declare userId: number;
     declare bookId: number;
-    declare starRating: string | null;
+    declare starRating: number;
     declare comment: string;
     declare updatedAt?: Date;
 }
@@ -28,7 +28,7 @@ export function ReviewFactory(sequelize: Sequelize) {
             allowNull: true
         },
         starRating: {
-            type: DataTypes.ENUM('value1', 'value2', 'value3', 'value4', 'value5'),
+            type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
         },

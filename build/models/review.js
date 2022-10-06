@@ -23,7 +23,7 @@ function ReviewFactory(sequelize) {
             allowNull: true
         },
         starRating: {
-            type: sequelize_1.DataTypes.ENUM('value1', 'value2', 'value3', 'value4', 'value5'),
+            type: sequelize_1.DataTypes.INTEGER,
             allowNull: true,
             defaultValue: null
         },
