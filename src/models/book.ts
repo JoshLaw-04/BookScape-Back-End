@@ -39,11 +39,11 @@ export function BookFactory(sequelize: Sequelize) {
         },
         publisher: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         publishedDate: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     }, {
         freezeTableName: true,
