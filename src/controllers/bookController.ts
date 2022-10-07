@@ -26,7 +26,7 @@ export const setBook: RequestHandler = async (req, res, next ) => {
 
     if (bookFound && bookFound.title == newBook.title) {
         await Book.update(newBook, {where: {title: title}})
-        res.status(200).json('updated');
+        res.status(200).json(bookFound);
     } else if (!bookFound) {
         let createdBook = await Book.create(newBook);
         res.status(201).json(createdBook);

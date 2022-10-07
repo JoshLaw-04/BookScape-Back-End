@@ -25,7 +25,7 @@ export function ReviewFactory(sequelize: Sequelize) {
         },
         bookId: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         starRating: {
             type: DataTypes.INTEGER,

@@ -24,7 +24,7 @@ const setBook = async (req, res, next) => {
     let bookFound = await book_1.Book.findOne({ where: { title: title } });
     if (bookFound && bookFound.title == newBook.title) {
         await book_1.Book.update(newBook, { where: { title: title } });
-        res.status(200).json('updated');
+        res.status(200).json(bookFound);
     }
     else if (!bookFound) {
         let createdBook = await book_1.Book.create(newBook);

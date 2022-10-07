@@ -20,7 +20,7 @@ function ReviewFactory(sequelize) {
         },
         bookId: {
             type: sequelize_1.DataTypes.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         starRating: {
             type: sequelize_1.DataTypes.INTEGER,
