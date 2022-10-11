@@ -30,7 +30,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 //****remember to take out FORCE after testing**** */
-db.sync({force: true}).then(() => {
+db.sync().then(() => {
     console.info('you are soo connected right now!')
 });
 

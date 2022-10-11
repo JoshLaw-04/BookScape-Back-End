@@ -1,12 +1,14 @@
 import { RequestHandler } from "express";
+import { Book } from "../models/book";
 import { Review } from "../models/review";
 import { User } from "../models/user";
 import { verifyUser } from "../services/auth";
 
 export const getAllReviews: RequestHandler = async (req,res,next) => {
-    let reviews = await Review.findAll( {include: [{
-                                                model: User, 
-                                                required: true}],
+    let reviews = await Review.findAll( {include: [
+                                                 {model: User, required: true},
+                                                 {model: Book, required: true}
+                                                ],
                                                 order: [['reviewId', 'DESC']]});
     res.status(200).json(reviews);
 };

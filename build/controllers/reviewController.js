@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllUserReviews = exports.deleteReview = exports.updateReview = exports.getReview = exports.createReview = exports.getAllReviews = void 0;
+const book_1 = require("../models/book");
 const review_1 = require("../models/review");
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const getAllReviews = async (req, res, next) => {
-    let reviews = await review_1.Review.findAll({ include: [{
-                model: user_1.User,
-                required: true
-            }],
+    let reviews = await review_1.Review.findAll({ include: [
+            { model: user_1.User, required: true },
+            { model: book_1.Book, required: true }
+        ],
         order: [['reviewId', 'DESC']] });
     res.status(200).json(reviews);
 };

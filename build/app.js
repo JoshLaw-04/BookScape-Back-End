@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     res.status(404).end();
 });
 //****remember to take out FORCE after testing**** */
-models_1.db.sync({ force: true }).then(() => {
+models_1.db.sync().then(() => {
     console.info('you are soo connected right now!');
 });
 app.listen(3000);
