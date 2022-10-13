@@ -28,7 +28,9 @@ export const loginUser: RequestHandler = async (req, res, next) => {
         let passwordsMatch = await comparePasswords(req.body.password, existingUser.password);
         if (passwordsMatch) {
             let token = await signUserToken(existingUser);
-            res.status(200).json({ token });
+            let userId = existingUser.userId
+            let firstName = existingUser.firstName
+            res.status(200).json({ token, userId, firstName });
         } else {
             res.status(401).json('Invalid password or username');
         }

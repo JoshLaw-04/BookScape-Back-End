@@ -27,7 +27,9 @@ const loginUser = async (req, res, next) => {
         let passwordsMatch = await (0, auth_1.comparePasswords)(req.body.password, existingUser.password);
         if (passwordsMatch) {
             let token = await (0, auth_1.signUserToken)(existingUser);
-            res.status(200).json({ token });
+            let userId = existingUser.userId;
+            let firstName = existingUser.firstName;
+            res.status(200).json({ token, userId, firstName });
         }
         else {
             res.status(401).json('Invalid password or username');
