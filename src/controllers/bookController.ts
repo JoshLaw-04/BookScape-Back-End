@@ -3,7 +3,7 @@ import { Book } from "../models/book";
 import { Review } from "../models/review";
 
 export const getAllBooks: RequestHandler = async (req, res, next) => {
-    let book = await Book.findAll();
+    let book = await Book.findAll({order: [['updatedAt', 'DESC']]});
     res.status(200).json(book);
 };
 

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.setBook = exports.getBook = exports.getAllBooks = void 0;
 const book_1 = require("../models/book");
 const getAllBooks = async (req, res, next) => {
-    let book = await book_1.Book.findAll();
+    let book = await book_1.Book.findAll({ order: [['updatedAt', 'DESC']] });
     res.status(200).json(book);
 };
 exports.getAllBooks = getAllBooks;

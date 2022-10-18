@@ -21,12 +21,14 @@ const createReview = async (req, res, next) => {
     }
     let newReview = req.body;
     newReview.userId = user.userId;
-    if (newReview.comment) {
+    if (newReview.userId
+        && newReview.bookId
+        && newReview.comment) {
         let created = await review_1.Review.create(newReview);
         res.status(201).json(created);
     }
     else {
-        res.status(400).send('Please add a comment');
+        res.status(400).send('Either the userId, bookId, or comment is null');
     }
 };
 exports.createReview = createReview;

@@ -5,7 +5,11 @@ const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
     let newUser = req.body;
-    if (newUser.username && newUser.password) {
+    if (newUser.username
+        && newUser.password
+        && newUser.firstName
+        && newUser.lastName
+        && newUser.email) {
         let hashedPassword = await (0, auth_1.hashPassword)(newUser.password);
         newUser.password = hashedPassword;
         let created = await user_1.User.create(newUser);
@@ -15,7 +19,7 @@ const createUser = async (req, res, next) => {
         });
     }
     else {
-        res.status(400).send('Username and password required');
+        res.status(400).send('Username, email and password required');
     }
 };
 exports.createUser = createUser;

@@ -6,7 +6,11 @@ import { hashPassword, comparePasswords,
 
 export const createUser: RequestHandler = async (req, res, next) => {
     let newUser: User = req.body;
-    if (newUser.username && newUser.password) {
+    if (newUser.username 
+        && newUser.password 
+        && newUser.firstName
+        && newUser.lastName
+        && newUser.email) {
         let hashedPassword = await hashPassword(newUser.password);
          newUser.password = hashedPassword;
          let created = await User.create(newUser);
@@ -15,7 +19,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
             userId: created.userId
          });
     } else {
-        res.status(400).send('Username and password required')
+        res.status(400).send('Username, email and password required')
     }
 }
 
