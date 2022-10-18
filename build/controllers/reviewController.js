@@ -17,7 +17,7 @@ exports.getAllReviews = getAllReviews;
 const createReview = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in or sign up to create a review');
     }
     let newReview = req.body;
     newReview.userId = user.userId;
@@ -39,53 +39,51 @@ const getReview = async (req, res, next) => {
         res.status(200).json(foundReview);
     }
     else {
-        res.status(404).json({});
+        res.status(404).json('Review not found by reviewId');
     }
 };
 exports.getReview = getReview;
 const updateReview = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in to update the review');
     }
     let reviewId = req.params.reviewId;
     let newReview = req.body;
     let foundReview = await review_1.Review.findByPk(reviewId);
     if (foundReview && foundReview.userId == user.userId
         && foundReview.reviewId == newReview.reviewId
-        && newReview.comment) {
+        && newReview.comment
+        && newReview.bookId) {
         await review_1.Review.update(newReview, { where: { reviewId: reviewId } });
-        res.status(200).json('success!');
+        res.status(200).json('Review updated!');
     }
     else {
-        res.status(400).json("the userId doesn't match, review can't be found, or the comment is missing");
+        res.status(400).json("The userId doesn't match, review can't be found, or the bookId/comment is missing");
     }
 };
 exports.updateReview = updateReview;
 const deleteReview = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in to delete a review');
     }
     let reviewId = req.params.reviewId;
     let foundReview = await review_1.Review.findByPk(reviewId);
     if (foundReview && foundReview.userId == user.userId) {
         await review_1.Review.destroy({ where: { reviewId: reviewId } });
-        res.status(200).json('success!');
+        res.status(200).json('Review deleted!');
     }
     else {
-        res.status(404).json("review's userId & user's userId don't match or doesn't exist");
+        res.status(404).json("Review's userId & user's userId don't match or doesn't exist");
     }
     ;
 };
 exports.deleteReview = deleteReview;
-//getAllUserReviews returns all the reviews that match the logged in user's userId
-//it has a check to make sure the user is logged in & the user's userId will need
-//to be accessed in the frontend - perhaps by storing & accessing in local storage
 const getAllUserReviews = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send('user not logged in');
+        return res.status(403).send('Please log in to view all of your reviews');
     }
     let foundReviews = await review_1.Review.findAll({ where: { userId: user.userId } });
     res.status(200).json(foundReviews);

@@ -19,7 +19,7 @@ const createUser = async (req, res, next) => {
         });
     }
     else {
-        res.status(400).send('Username, email and password required');
+        res.status(400).send('Username, password, first name, last name, and email required');
     }
 };
 exports.createUser = createUser;
@@ -36,18 +36,18 @@ const loginUser = async (req, res, next) => {
             res.status(200).json({ token, userId, firstName });
         }
         else {
-            res.status(401).json('Invalid password or username');
+            res.status(401).json('Invalid password');
         }
     }
     else {
-        res.status(401).json('Invalid password or username');
+        res.status(401).json('Username not found, please sign up!');
     }
 };
 exports.loginUser = loginUser;
 const getUser = async (req, res, next) => {
     let user = await (0, auth_1.verifyUser)(req);
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in');
     }
     let userId = req.params.userId;
     let userFound = await user_1.User.findByPk(userId);
@@ -55,7 +55,7 @@ const getUser = async (req, res, next) => {
         res.status(200).json(userFound);
     }
     else {
-        res.status(404).json({});
+        res.status(404).json('User not found, please sign up.');
     }
 };
 exports.getUser = getUser;

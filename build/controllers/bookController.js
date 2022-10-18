@@ -14,7 +14,7 @@ const getBook = async (req, res, next) => {
         res.status(200).json(foundBook);
     }
     else {
-        res.status(404).json({});
+        res.status(404).json('Book not found by bookId');
     }
 };
 exports.getBook = getBook;
@@ -31,7 +31,7 @@ const setBook = async (req, res, next) => {
         res.status(201).json(createdBook);
     }
     else {
-        res.status(400).json();
+        res.status(400).json('Error saving new book to DB & no book found with that title');
     }
 };
 exports.setBook = setBook;
