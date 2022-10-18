@@ -19,7 +19,7 @@ export const createUser: RequestHandler = async (req, res, next) => {
             userId: created.userId
          });
     } else {
-        res.status(400).send('Username, email and password required')
+        res.status(400).send('Username, password, first name, last name, and email required')
     }
 }
 
@@ -36,10 +36,10 @@ export const loginUser: RequestHandler = async (req, res, next) => {
             let firstName = existingUser.firstName
             res.status(200).json({ token, userId, firstName });
         } else {
-            res.status(401).json('Invalid password or username');
+            res.status(401).json('Invalid password');
         }
     } else {
-        res.status(401).json('Invalid password or username');
+        res.status(401).json('Username not found, please sign up!');
     }
 }
 
@@ -47,7 +47,7 @@ export const getUser: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in');
     }
 
     let userId = req.params.userId;
@@ -56,6 +56,6 @@ export const getUser: RequestHandler = async (req, res, next) => {
     if (userFound) {
         res.status(200).json(userFound)
     } else {
-        res.status(404).json({});
+        res.status(404).json('User not found, please sign up.');
     }
 }

@@ -18,7 +18,7 @@ export const createReview: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in or sign up to create a review');
     }
 
     let newReview: Review = req.body;
@@ -40,7 +40,7 @@ export const getReview: RequestHandler = async (req, res, next) => {
     if (foundReview) {
         res.status(200).json(foundReview);
     } else {
-        res.status(404).json({});
+        res.status(404).json('Review not found by reviewId');
     }
 };
 
@@ -49,7 +49,7 @@ export const updateReview: RequestHandler = async (req, res, next) => {
     let user:User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in to update the review');
     }
 
     let reviewId = req.params.reviewId;
@@ -58,11 +58,12 @@ export const updateReview: RequestHandler = async (req, res, next) => {
 
     if (foundReview && foundReview.userId == user.userId
         && foundReview.reviewId == newReview.reviewId
-        && newReview.comment) {
+        && newReview.comment
+        && newReview.bookId) {
             await Review.update(newReview, {where: {reviewId: reviewId}});
-            res.status(200).json('success!');
+            res.status(200).json('Review updated!');
         } else {
-            res.status(400).json("the userId doesn't match, review can't be found, or the comment is missing");
+            res.status(400).json("The userId doesn't match, review can't be found, or the bookId/comment is missing");
         }
 };
 
@@ -71,7 +72,7 @@ export const deleteReview: RequestHandler = async (req, res, next) => {
     let user:User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send();
+        return res.status(403).send('Please log in to delete a review');
     }
 
     let reviewId = req.params.reviewId;
@@ -79,22 +80,17 @@ export const deleteReview: RequestHandler = async (req, res, next) => {
 
     if (foundReview && foundReview.userId == user.userId) {
         await Review.destroy({where: {reviewId : reviewId}});
-        res.status(200).json('success!');
+        res.status(200).json('Review deleted!');
     } else {
-        res.status(404).json("review's userId & user's userId don't match or doesn't exist")
+        res.status(404).json("Review's userId & user's userId don't match or doesn't exist")
     };
 };
-
-
-//getAllUserReviews returns all the reviews that match the logged in user's userId
-//it has a check to make sure the user is logged in & the user's userId will need
-//to be accessed in the frontend - perhaps by storing & accessing in local storage
 
 export const getAllUserReviews: RequestHandler = async (req,res,next) => {
     let user:User | null = await verifyUser(req);
 
     if (!user) {
-        return res.status(403).send('user not logged in')
+        return res.status(403).send('Please log in to view all of your reviews')
     }
 
     let foundReviews = await Review.findAll({ where: { userId: user.userId}});

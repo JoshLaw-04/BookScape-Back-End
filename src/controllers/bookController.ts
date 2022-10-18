@@ -13,7 +13,7 @@ export const getBook: RequestHandler = async (req, res, next) => {
     if (foundBook) {
         res.status(200).json(foundBook);
     } else {
-        res.status(404).json({});
+        res.status(404).json('Book not found by bookId');
     }
 };
 
@@ -31,6 +31,6 @@ export const setBook: RequestHandler = async (req, res, next ) => {
         let createdBook = await Book.create(newBook);
         res.status(201).json(createdBook);
     } else {
-        res.status(400).json();
+        res.status(400).json('Error saving new book to DB & no book found with that title');
     }
 }
