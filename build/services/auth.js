@@ -18,7 +18,8 @@ const comparePasswords = async (plainTextPassword, hashPassword) => {
 };
 exports.comparePasswords = comparePasswords;
 const signUserToken = async (user) => {
-    let token = jsonwebtoken_1.default.sign({ userId: user.userId }, secret, { expiresIn: '12hr' });
+    let token = jsonwebtoken_1.default.sign({ userId: user.userId }, secret, { expiresIn: '1.5hr' });
+    console.log(token);
     return token;
 };
 exports.signUserToken = signUserToken;
